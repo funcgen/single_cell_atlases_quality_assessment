@@ -1,4 +1,4 @@
-# <p style="text-align: center;">Revealing the Prevalence of Suboptimal Cells and Organs in Reference Cell Atlases:<br>An Imperative for Enhanced Quality Control</p>
+<p style="text-align: center;">Revealing the Prevalence of Suboptimal Cells and Organs in Reference Cell Atlases:<br>An Imperative for Enhanced Quality Control</p>
 
 This repository contains the code needed for reproducing the figures of the study "Revealing the Prevalence of Suboptimal Cells and Organs in Reference Cell Atlases: An Imperative for Enhanced Quality Control" (Montserrat-Ayuso, Esteve-Codina, bioRxiv 2024). Find [here]() the original publication.
 
