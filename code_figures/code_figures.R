@@ -1,4 +1,4 @@
-### SCRIPT TO REPRODUCE THE FIGURES OF THE MANUSCRIPT ###
+### SCRIPT TO PERFORM EXHAUSTIVE QUALITY CONTROL ON CELLS OF mouse[i] cALD340A ###
 
 # Load libraries
 library(Seurat)
@@ -6,7 +6,6 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(Matrix)
-library(harmony)
 library(DropletQC)
 library(scCustomize)
 library(viridis)
@@ -306,16 +305,18 @@ metadata_kidney2_sn <- seurat_kidney2_sn@meta.data
 ################
 ### FIGURE 1 ###
 ################
-
 # Figure 1a
 plot1 <- DimPlot(
   object = seurat_kidney,
   group.by = "authors_annotations",
   repel = TRUE,
   label = TRUE,
-  label.size = 2,
+  label.size = 4,
 ) + NoLegend() +
-  theme(title = element_text(size=11)) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
   labs(title = "Original authors annotations")
 
 plot2 <- FeaturePlot_scCustom(
@@ -324,26 +325,35 @@ plot2 <- FeaturePlot_scCustom(
   max.cutoff = c(
     quantile(seurat_kidney@meta.data$nuclear_fraction, 0.95)
   ),
-  # num_columns = 3,
   colors_use = pal
-) +
-  theme(title = element_text(size=11)) +
+) + 
+  theme(
+    legend.position = c(0.03, 0.9),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Introns fraction")
 
 plot3 <- DimPlot(
   object = seurat_kidney,
   group.by = "cell_status"
-) +
-  theme(title = element_text(size=11)) +
+) + 
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Barcode status")
 
 plota <- ggpubr::ggarrange(plot1, plot2, plot3, ncol=3, nrow=1, common.legend = FALSE)
-plota <- ggpubr::annotate_figure(
-    plota, 
-    top = ggpubr::text_grob("Tabula Muris kidney 10x", 
-    color = "black", face = "bold", size = 14)
-)
-
+plota <- ggpubr::annotate_figure(plota, top = ggpubr::text_grob("Tabula Muris kidney 10x", color = "black", face = "bold", 
+                                                                size = 25
+                                                                )
+                                      )
 
 # Figure 1b
 plot1 <- DimPlot(
@@ -351,9 +361,12 @@ plot1 <- DimPlot(
   group.by = "authors_annotations",
   repel = TRUE,
   label = TRUE,
-  label.size = 2,
+  label.size = 4,
 ) + NoLegend() +
-  theme(title = element_text(size=11)) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
   labs(title = "Original authors annotations")
 
 plot2 <- FeaturePlot_scCustom(
@@ -364,22 +377,32 @@ plot2 <- FeaturePlot_scCustom(
   ),
   colors_use = pal
 ) +
-  theme(title = element_text(size=11)) +
+  theme(
+    legend.position = c(0.05, 0.9),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") + 
   labs(title = "Introns fraction")
 plot3 <- DimPlot(
   object = seurat_liver,
   group.by = "cell_status",
   repel = TRUE
-) +
-  theme(title = element_text(size=11)) +
+) + 
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Barcode status")
 plotb <- ggpubr::ggarrange(plot1, plot2, plot3, ncol=3, nrow=1, common.legend = FALSE)
-plotb <- ggpubr::annotate_figure(
-    plotb, 
-    top = ggpubr::text_grob("MacParland kidney", 
-    color = "black", face = "bold", size = 14)
+plotb <- ggpubr::annotate_figure(plotb, top = ggpubr::text_grob("MacParland liver", color = "black", face = "bold", 
+                                                                size = 25
+                                                                )
 )
-
 
 # Figure 1c
 plot1 <- DimPlot(
@@ -387,9 +410,12 @@ plot1 <- DimPlot(
   group.by = "authors_annotations",
   repel = TRUE,
   label = TRUE,
-  label.size = 2,
+  label.size = 4,
 ) + NoLegend() +
-  theme(title = element_text(size=11)) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+        ) +
   labs(title = "Original authors annotations")
 
 plot2 <- FeaturePlot_scCustom(
@@ -399,21 +425,32 @@ plot2 <- FeaturePlot_scCustom(
     quantile(seurat_retina@meta.data$nuclear_fraction, 0.95)
   ),
   colors_use = pal
-) +
-  theme(title = element_text(size=11)) +
+) + 
+  theme(
+    legend.position = c(0.05, 0.9),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Introns fraction")
 plot3 <- DimPlot(
   object = seurat_retina,
   group.by = "cell_status"
-) +
-  theme(title = element_text(size=11)) +
+) + 
+  theme(
+    legend.position = c(0.05, 0.96),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Barcode status")
 plotc <- ggpubr::ggarrange(plot1, plot2, plot3, ncol=3, nrow=1, common.legend = FALSE)
-plotc <- ggpubr::annotate_figure(
-    plotc, 
-    top = ggpubr::text_grob("Lukowski retina", color = "black", face = "bold", size = 14)
+plotc <- ggpubr::annotate_figure(plotc, top = ggpubr::text_grob("Lukowski retina", color = "black", face = "bold", 
+                                                                size = 25
+                                                                )
 )
-
 
 # Figure 1d
 plot1 <- DimPlot(
@@ -421,9 +458,12 @@ plot1 <- DimPlot(
   group.by = "authors_annotations",
   repel = TRUE,
   label = TRUE,
-  label.size = 2,
+  label.size = 4,
 ) + NoLegend() +
-  theme(title = element_text(size=11)) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
   labs(title = "Original authors annotations")
 
 plot2 <- FeaturePlot_scCustom(
@@ -433,30 +473,41 @@ plot2 <- FeaturePlot_scCustom(
     quantile(seurat_kidney_smart@meta.data$nuclear_fraction, 0.95)
   ),
   colors_use = pal
-) +
-  theme(title = element_text(size=11)) +
+) + 
+  theme(
+      legend.position = c(0.05, 0.9),
+      axis.ticks = element_blank(),
+      axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Introns fraction")
 plot3 <- DimPlot(
   object = seurat_kidney_smart,
   group.by = "cell_status"
-) +
-  theme(title = element_text(size=11)) +
+) + 
+  theme(
+      legend.position = c(0.05, 0.95),
+      axis.ticks = element_blank(),
+      axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Barcode status")
 plotd <- ggpubr::ggarrange(plot1, plot2, plot3, ncol=3, nrow=1, common.legend = FALSE)
-plotd <- ggpubr::annotate_figure(
-    plotd, 
-    top = ggpubr::text_grob("Tabula Muris smart-seq2 kidney", 
-    color = "black", face = "bold", size = 14)
-)
+plotd <- ggpubr::annotate_figure(plotd, top = ggpubr::text_grob("Tabula Muris Smart-seq2 kidney", color = "black", face = "bold", 
+                                                                size = 25
+                                                                ))
 
-plot_fig1 <- ggpubr::ggarrange(plota, plotb, plotc, plotd, ncol=1, nrow=4, common.legend = FALSE, labels = "AUTO")
-plot_fig1
+plot_fig1 <- ggpubr::ggarrange(plota, plotb, plotc, plotd, ncol=1, nrow=4, common.legend = TRUE, labels = "AUTO")
+
 ggsave(
   filename = "../results/Fig1.png",
   plot = plot_fig1,
-  width = 15,
-  height = 25
+  width = 17,
+  height = 20
 )
+
 
 
 
@@ -465,60 +516,165 @@ ggsave(
 ################
 
 # Figure 2a
-plota <- FeaturePlot_scCustom(
+plota1 <- FeaturePlot_scCustom(
   seurat_object = seurat_kidney,
-  features = c("Malat1", "introns_fraction"),
+  features = "Malat1",
   max.cutoff = c(
-    quantile(seurat_kidney@assays$RNA@data["Malat1",], 0.95),
+    quantile(seurat_kidney@assays$RNA@data["Malat1",], 0.95)
+  ),
+  colors_use = pal,
+  na_cutoff = c(0)
+) +
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  labs(title = "Malat1")
+
+plota2 <- FeaturePlot_scCustom(
+  seurat_object = seurat_kidney,
+  features = "introns_fraction",
+  max.cutoff = c(
     quantile(seurat_kidney@meta.data$nuclear_fraction, 0.95)
   ),
   colors_use = pal,
   na_cutoff = c(0)
 ) +
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Introns fraction")
-
+plota <- ggpubr::ggarrange(plota1, plota2, ncol=2, nrow=1, common.legend = FALSE)
+plota <- ggpubr::annotate_figure(plota, top = ggpubr::text_grob("Tabula Muris kidney 10x", color = "black", face = "bold", 
+                                                                size = 25
+))
 
 # Figure 2b
-plotb <- FeaturePlot_scCustom(
+plotb1 <- FeaturePlot_scCustom(
   seurat_object = seurat_liver,
-  features = c("MALAT1", "introns_fraction"),
+  features = "MALAT1",
   max.cutoff = c(
-    quantile(seurat_liver@assays$RNA@data["MALAT1",], 0.95),
+    quantile(seurat_liver@assays$RNA@data["MALAT1",], 0.95)
+  ),
+  colors_use = pal,
+  na_cutoff = c(0)
+) +
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  labs(title = "Malat1")
+
+plotb2 <- FeaturePlot_scCustom(
+  seurat_object = seurat_liver,
+  features = "introns_fraction",
+  max.cutoff = c(
     quantile(seurat_liver@meta.data$nuclear_fraction, 0.95)
   ),
   colors_use = pal,
   na_cutoff = c(0)
 ) +
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Introns fraction")
+plotb <- ggpubr::ggarrange(plotb1, plotb2, ncol=2, nrow=1, common.legend = FALSE)
+plotb <- ggpubr::annotate_figure(plotb, top = ggpubr::text_grob("MacParland liver", color = "black", face = "bold", 
+                                                                size = 25
+))
 
 
 # Figure 2c
-plotc <- FeaturePlot_scCustom(
+plotc1 <- FeaturePlot_scCustom(
   seurat_object = seurat_retina,
-  features = c("MALAT1", "introns_fraction"),
+  features = "MALAT1",
   max.cutoff = c(
-    quantile(seurat_retina@assays$RNA@data["MALAT1",], 0.95),
+    quantile(seurat_retina@assays$RNA@data["MALAT1",], 0.95)
+  ),
+  colors_use = pal,
+  na_cutoff = c(0)
+) +
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  labs(title = "Malat1")
+
+plotc2 <- FeaturePlot_scCustom(
+  seurat_object = seurat_retina,
+  features = "introns_fraction",
+  max.cutoff = c(
     quantile(seurat_retina@meta.data$nuclear_fraction, 0.95)
   ),
   colors_use = pal,
   na_cutoff = c(0)
 ) +
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Introns fraction")
+plotc <- ggpubr::ggarrange(plotc1, plotc2, ncol=2, nrow=1, common.legend = FALSE)
+plotc <- ggpubr::annotate_figure(plotc, top = ggpubr::text_grob("Lukowski retina", color = "black", face = "bold", 
+                                                                size = 25
+))
 
 
 # Figure 2d
-plotd <- FeaturePlot_scCustom(
+plotd1 <- FeaturePlot_scCustom(
   seurat_object = seurat_kidney_smart,
-  features = c("Malat1", "introns_fraction"),
+  features = "Malat1",
   max.cutoff = c(
-    quantile(seurat_kidney_smart@assays$RNA@data["Malat1",], 0.95),
-    quantile(seurat_kidney_smart@meta.data$nuclear_fraction, 0.95)
+    quantile(seurat_kidney_smart@assays$RNA@data["Malat1",], 0.95)
   ),
-  # num_columns = 3,
   colors_use = pal,
   na_cutoff = c(0)
 ) +
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  labs(title = "Malat1")
+
+plotd2 <- FeaturePlot_scCustom(
+  seurat_object = seurat_kidney_smart,
+  features = "introns_fraction",
+  max.cutoff = c(
+    quantile(seurat_kidney_smart@meta.data$nuclear_fraction, 0.95)
+  ),
+  colors_use = pal,
+  na_cutoff = c(0)
+) +
+  theme(
+    legend.position = c(0.05, 0.95),
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+    # axis.title.x = element_blank()
+  ) +
+  xlab("") +
+  ylab("") +
   labs(title = "Introns fraction")
+plotd <- ggpubr::ggarrange(plotd1, plotd2, ncol=2, nrow=1, common.legend = FALSE)
+plotd <- ggpubr::annotate_figure(plotd, top = ggpubr::text_grob("Tabula Muris Smart-seq2 kidney", color = "black", face = "bold", 
+                                                                size = 25
+))
+
+
 
 
 # Figure 2e
@@ -533,15 +689,13 @@ plote <- ggplot(
   labs(fill = "Barcode status") +
   theme_bw() + 
   theme(legend.position = "none")
-
-plot_fig2 <- ggpubr::ggarrange(plota, plotb, plotc, plotd, plote, ncol=1, nrow=5, common.legend = FALSE, labels = "AUTO")
-plot_fig2
+plot_fig3 <- ggpubr::ggarrange(plota, plotb, plotc, plotd, plote, ncol=1, nrow=5, common.legend = FALSE, labels = "AUTO")
 
 ggsave(
   filename = "../results/Fig2.png",
-  plot = plot_fig2,
+  plot = plot_fig3,
   width = 15,
-  height = 20
+  height = 22
 )
 
 
@@ -575,10 +729,16 @@ plota <- DimPlot(
   group.by = "reduced_annotation",
   label = TRUE,
   repel = TRUE,
-  raster = FALSE
+  raster = FALSE,
+  cols = c("#F8766D", "#B79F00", "#00BA38", "#00BFC4", "darkgrey", "#F564E3")
 ) + NoLegend() +
-  labs(title = "Reduced authors annotations")
-
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  labs(
+    title = "Authors annotations"
+    )
 
 # Figure 3b
 plotb <- FeaturePlot_scCustom(
@@ -587,11 +747,17 @@ plotb <- FeaturePlot_scCustom(
   max.cutoff = c(
     quantile(seurat_kidney2@assays$RNA@data["ENSMUSG00000092341",], 0.95)
   ),
+  # num_columns = 3,
   colors_use = pal,
   na_cutoff = 0
 ) +
-  labs(title = "Malat1 | single-cells")
-
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank(),
+  ) +
+  labs(title = "Malat1 | single-cells") +
+  xlab("") +
+  ylab("")
 
 # Figure 3c
 plotc <- FeaturePlot_scCustom(
@@ -600,30 +766,38 @@ plotc <- FeaturePlot_scCustom(
   max.cutoff = c(
     quantile(seurat_kidney2@assays$RNA@data["ENSMUSG00000092341",], 0.95)
   ),
+  # num_columns = 3,
   colors_use = pal,
   na_cutoff = 0
 ) +
-  labs(title = "Malat1 | single-nuclei")
-
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  labs(title = "Malat1 | single-nuclei") +
+  xlab("") +
+  ylab("")
 
 plot_fig3 <- ggpubr::ggarrange(plota, plotb, plotc, ncol=3, nrow=1, common.legend = FALSE, labels = "AUTO")
 plot <- ggpubr::annotate_figure(
-  plot_fig3, top = ggpubr::text_grob("Kidney Novella-Rausell", color = "black", face = "bold", size = 14)
+  plot_fig3, top = ggpubr::text_grob("Kidney Novella-Rausell", color = "black", face = "bold", size = 20)
 )
-
+plot
 ggsave(
   filename = "../results/Fig3.png",
   plot = plot,
-  width = 25,
-  height = 15
+  width = 15,
+  height = 8
 )
-
-
 
 
 ################
 ### FIGURE 4 ###
 ################
+
+metadata_kidney2$mitochondrial_ratio <- metadata_kidney2$pct_counts_mt/100
+metadata_kidney2_sc$mitochondrial_ratio <- metadata_kidney2_sc$pct_counts_mt/100
+metadata_kidney2_sn$mitochondrial_ratio <- metadata_kidney2_sn$pct_counts_mt/100
 
 # Figure 4a
 plot4a <- ggplot(
@@ -634,6 +808,7 @@ plot4a <- ggplot(
     suspension_type = c("cell" = "single-cell", "nucleus" = "single-nucleus")
     )
   ) +
+  scale_y_continuous(labels = scales::unit_format(unit = "K", scale = 1e-3)) +
   geom_vline(xintercept = 3.5) +
   xlab("Malat1 expression") +
   ylab("Number of cells") +
@@ -641,46 +816,93 @@ plot4a <- ggplot(
   theme(
     axis.text = element_text(size = 15),
     axis.title = element_text(size = 18),
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    axis.title.x = element_text(margin = margin(t = 5, r = 0, b = 15, l = 0)),
     strip.text = element_text(
-      size = 15)
+      size = 20)
   )
 
-
 # Figure 4b
-plot4b <- ggplot(data = metadata_kidney2, mapping = aes(x = Malat1_status, y = pct_counts_mt, fill = Malat1_status)) +
+plot4b <- ggplot(data = metadata_kidney2, mapping = aes(x = Malat1_status, y = mitochondrial_ratio, fill = Malat1_status)) +
   geom_boxplot(show.legend = FALSE) +
-  facet_wrap(~ suspension_type, labeller = labeller(
-    suspension_type = c("cell" = "single-cell", "nucleus" = "single-nucleus")
-  )) +
-  xlab("Malat1 expression") +
-  ylab("Percentage mitochondrial genome mRNA") +
+  xlab("") +
+  ylab("Mitochondrial ratio") +
   theme_bw() +
   theme(
     axis.text = element_text(size = 15),
     axis.title = element_text(size = 18),
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    axis.title.x = element_text(margin = margin(t = 0, r = 0, b = 0, l = 0)),
     strip.text = element_text(
-      size = 15
+      size = 20
     )
-  )
-
+  ) +
+  ylim(c(0, 1))
 
 plot_fig4 <- ggpubr::ggarrange(plot4a, plot4b, ncol=1, nrow=2, common.legend = FALSE, labels = "AUTO")
-plot_fig4
+plot <- ggpubr::annotate_figure(
+  plot_fig4, top = ggpubr::text_grob("Kidney Novella-Rausell", color = "black", face = "bold", size = 20)
+)
 
 ggsave(
   filename = "../results/Fig4.png",
-  plot = plot_fig4,
+  plot = plot,
   width = 15,
   height = 15
 )
 
+plot4c <- ggplot(data = metadata_kidney2_sn, mapping = aes(x = Malat1_status, y = mitochondrial_ratio, fill = Malat1_status)) +
+  geom_boxplot(show.legend = FALSE) +
+  xlab("") +
+  ylab("Mitochondrial ratio") +
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15),
+    axis.title = element_text(size = 18),
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    axis.title.x = element_text(margin = margin(t = 0, r = 0, b = 0, l = 0)),
+    strip.text = element_text(
+      size = 20
+    ) 
+  ) +
+  ylim(c(0, 1))
+
+# Figure 4b
+plot4b <- ggplot(data = metadata_kidney2, mapping = aes(x = Malat1_status, y = mitochondrial_ratio, fill = Malat1_status)) +
+  geom_boxplot(show.legend = FALSE) +
+  facet_wrap(~ suspension_type, labeller = labeller(
+    suspension_type = c("cell" = "single-cell", "nucleus" = "single-nucleus")
+  )) +
+  xlab("") +
+  ylab("Mitochondrial ratio") +
+  theme_bw() +
+  theme(
+    axis.text = element_text(size = 15),
+    axis.title = element_text(size = 18),
+    axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    axis.title.x = element_text(margin = margin(t = 0, r = 0, b = 0, l = 0)),
+    strip.text = element_text(
+      size = 20
+    )
+  )
+
+plot_fig4 <- ggpubr::ggarrange(plot4a, plot4b, ncol=1, nrow=2, common.legend = FALSE, labels = "AUTO")
+plot_fig4 <- ggpubr::annotate_figure(
+  plot_fig4, top = ggpubr::text_grob("Kidney Novella-Rausell", color = "black", face = "bold", size = 20)
+)
+
+ggsave(
+  filename = "../results/Fig4.png",
+  plot = plot_fig4,
+  width = 10,
+  height = 10
+)
 
 
 ################
 ### FIGURE 5 ###
 ################
 
-# Figure 5a
 plot5a <- ggplot(data = metadata_kidney, mapping = aes(x = introns_fraction, y = log10(nCount_RNA), color = percent.mt)) +
   geom_point(size = 2) +
   ylab("log10(nUMI)") +
@@ -696,9 +918,6 @@ plot5a <- ggplot(data = metadata_kidney, mapping = aes(x = introns_fraction, y =
     legend.title=element_text(size=15)
     
   )
-
-
-# Figure 5b
 plot5b <- ggplot(data = metadata_liver, mapping = aes(x = introns_fraction, y = log10(nCount_RNA), color = percent.mt)) +
   geom_point(size = 2) + 
   ylab("log10(nUMI") +
@@ -713,9 +932,6 @@ plot5b <- ggplot(data = metadata_liver, mapping = aes(x = introns_fraction, y = 
     legend.title=element_text(size=15)
     
   )
-
-
-# Figure 5c
 plot5c <- ggplot(data = metadata_retina, mapping = aes(x = introns_fraction, y = log10(nCount_RNA), color = percent.mt)) +
   geom_point(size = 2) +
   ylab("log10(nUMI") +
@@ -730,9 +946,7 @@ plot5c <- ggplot(data = metadata_retina, mapping = aes(x = introns_fraction, y =
     legend.title=element_text(size=15)
     
   )
-
-# Figure 5d
-plot6d <- ggplot(data = metadata_kidney_smart, mapping = aes(x = introns_fraction, y = log10(nCount_RNA), color = percent.mt)) +
+plot5d <- ggplot(data = metadata_kidney_smart, mapping = aes(x = introns_fraction, y = log10(nCount_RNA), color = percent.mt)) +
   geom_point(size = 2) +
   ylab("log10(nUMI") +
   xlab("Intron fraction") +
@@ -747,11 +961,10 @@ plot6d <- ggplot(data = metadata_kidney_smart, mapping = aes(x = introns_fractio
     
   )
 
-
 plot_fig5 <- ggpubr::ggarrange(
-  plot6a, plot6b, plot6c, plot6d, ncol=2, nrow=2, common.legend = TRUE, labels = "AUTO", legend = "bottom"
+  plot5a, plot5b, plot5c, plot5d, ncol=2, nrow=2, common.legend = TRUE, labels = "AUTO", legend = "bottom"
   )
-plot_fig5 
+plot_fig5
 
 ggsave(
   filename = "../results/Fig5.png",
@@ -762,13 +975,13 @@ ggsave(
 
 
 
-
 ################
 ### FIGURE 6 ###
 ################
 
 
 ### TO RUN IN AN HPC ###
+
 
 # Figure 6a
 plot1 <- DimPlot(
@@ -778,7 +991,11 @@ plot1 <- DimPlot(
   reduction = "umap",
   raster = FALSE
 ) +
-labs(title = "Tissue in publication")
+labs(title = "Tissue in publication") +
+theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+)
 plot2 <- FeaturePlot_scCustom(
   seurat_object = seurat_sapiens_all,
   features = "MALAT1",
@@ -790,9 +1007,14 @@ plot2 <- FeaturePlot_scCustom(
   raster = FALSE,
   na_cutoff = 0
 ) +
-labs(title = "MALAT1")
-plot6a <- ggpubr::ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = FALSE)
-plot6a <- ggpubr::annotate_figure(plot6a, top = ggpubr::text_grob("Tabula Sapiens | All", color = "black", face = "bold", size = 14))
+labs(title = "MALAT1") +
+theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank(),
+    axis.title.x = element_blank()
+)
+plot7a <- ggpubr::ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = FALSE)
+plot7a <- ggpubr::annotate_figure(plot7a, top = ggpubr::text_grob("Tabula Sapiens | All", color = "black", face = "bold", size = 20))
 
 
 
@@ -804,7 +1026,11 @@ plot1 <- DimPlot(
   repel = TRUE,
   reduction = "umap"
 ) + NoLegend() +
-  labs(title = "Authors annotations")
+  labs(title = "Authors annotations") +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+)
 plot2 <- FeaturePlot_scCustom(
   seurat_object = seurat_sapiens_kidney,
   features = "MALAT1",
@@ -814,9 +1040,15 @@ plot2 <- FeaturePlot_scCustom(
   colors_use = pal,
   reduction = "umap",
   na_cutoff = 0
-)
-plot6b <- ggpubr::ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = FALSE)
-plot6b <- ggpubr::annotate_figure(plot6b, top = ggpubr::text_grob("Tabula Sapiens | Kidney", color = "black", face = "bold", size = 14))
+) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank(),
+) +
+xlab("") +
+ylab("")
+plot7b <- ggpubr::ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = FALSE)
+plot7b <- ggpubr::annotate_figure(plot7b, top = ggpubr::text_grob("Tabula Sapiens | Kidney", color = "black", face = "bold", size = 20))
 
 
 
@@ -828,7 +1060,11 @@ plot1 <- DimPlot(
   repel = TRUE,
   reduction = "umap"
 ) + NoLegend() +
-  labs(title = "Authors annotations")
+  labs(title = "Authors annotations") + 
+    theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+)
 plot2 <- FeaturePlot_scCustom(
   seurat_object = seurat_sapiens_heart,
   features = "MALAT1",
@@ -838,9 +1074,15 @@ plot2 <- FeaturePlot_scCustom(
   colors_use = pal,
   reduction = "umap",
   na_cutoff = 0
-)
-plot6c <- ggpubr::ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = FALSE)
-plot6c <- ggpubr::annotate_figure(plot6c, top = ggpubr::text_grob("Tabula Sapiens | Heart", color = "black", face = "bold", size = 14))
+) +
+    theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+) +
+xlab("") + 
+ylab("")
+plot7c <- ggpubr::ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = FALSE)
+plot7c <- ggpubr::annotate_figure(plot7c, top = ggpubr::text_grob("Tabula Sapiens | Heart", color = "black", face = "bold", size = 20))
 
 
 
@@ -852,7 +1094,11 @@ plot1 <- DimPlot(
   repel = TRUE,
   reduction = "umap"
 ) + NoLegend() +
-  labs(title = "Authors annotations")
+  labs(title = "Authors annotations") +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank(),
+)
 plot2 <- FeaturePlot_scCustom(
   seurat_object = seurat_sapiens_prostate,
   features = "MALAT1",
@@ -862,16 +1108,22 @@ plot2 <- FeaturePlot_scCustom(
   colors_use = pal,
   reduction = "umap",
   na_cutoff = 0
-)
+) +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+) +
+xlab("") + 
+ylab("")
 plot6d <- ggpubr::ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = FALSE)
-plot6d <- ggpubr::annotate_figure(plot6d, top = ggpubr::text_grob("Tabula Sapiens | Prostate", color = "black", face = "bold", size = 14))
+plot6d <- ggpubr::annotate_figure(plot7d, top = ggpubr::text_grob("Tabula Sapiens | Prostate", color = "black", face = "bold", size = 20))
 
 plot_fig6 <- ggpubr::ggarrange(plot6a, plot6b, plot6c, plot6d, ncol=1, nrow=4, common.legend = FALSE, labels = "AUTO")
 
 
 ggsave(
-  filename = "../results/fig6.png",
-  plot = plot_fig6,
+  filename = "../results/Fig6.png",
+  plot = plot_fig7,
   width = 15,
   height = 20
 )
